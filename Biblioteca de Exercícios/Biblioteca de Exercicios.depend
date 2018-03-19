@@ -5,9 +5,10 @@
 	<stdlib.h>
 	<string.h>
 
-1521422876 source:f:\puc\aed\biblioteca de exercícios\main.c
+1521424904 source:f:\puc\aed\biblioteca de exercícios\main.c
 	<stdlib.h>
 	<stdio.h>
 	<locale.h>
 	<string.h>
+	<time.h>
 

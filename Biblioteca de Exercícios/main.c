@@ -2,6 +2,7 @@
 #include <stdio.h>  //standard input
 #include <locale.h> //language library
 #include <string.h> //string library
+#include <time.h>   //time library
 
 // PRELOAD FUNCTIONS
 void header();   //cabeçalho
@@ -24,6 +25,14 @@ void main() {
 
 	opc[0] = '0';
 	header();
+
+    int i;
+	for (i = 0; i < 7; i++){
+        cor("0a");
+        cor("01");
+        cor("07");
+	}
+
 	do {
         menu();
         if (opc[0] != '0'){
@@ -202,11 +211,14 @@ void getExercicio() {
 		case '4':
 			printf("\nNOME DO EXERCÍCIO: Salário líquido do encanador\n \n");
 			printf(" -> Digite o nº de dias trabalhados: ");
-			scanf("%d", &val[0]);
+
+			int salario;
+
+			scanf("%d", &salario);
 			fflush(stdin);
 
 			pular(1);
-			printf("| Resultado: %f", ((20 * val[0]) - (val[0] * 0.08)));
+			printf("| Resultado: %f", ((20 * salario) - (salario * 0.08)));
 			break;
 
 		// Ex. 05
@@ -288,6 +300,7 @@ void getExercicio() {
 			printf(
 				"\nNOME DO EXERCÍCIO: Somas apenas se ambos forem positivos "
 				"e informar qual é o negativo caso exista\n \n");
+
 			for (i = 1; i <= 2; i++) {
 				printf(" -> Digite o ");
 				printf("%d", i);
@@ -351,26 +364,28 @@ void getExercicio() {
 				"etária\n \n");
 
 			char nome[20];
+			int idade;
+
 			printf("Nome: ");
 			scanf("%s", &nome);
 			fflush(stdin);
 
 			printf("Idade: ");
-			scanf("%d", &val[0]);
+			scanf("%d", &idade);
 			fflush(stdin);
 
 			printf("\n| Sua categoria é: ");
 
-			if (val[0] >= 4 & val[0] <= 10) {
+			if (idade >= 4 & idade <= 10) {
 			  	printf("INFANTIL");
 			}
-			if (val[0] >= 11 & val[0] <= 15) {
+			if (idade >= 11 & idade <= 15) {
 				  printf("JUVENIL");
 			}
-			if (val[0] >= 16 & val[0] <= 20) {
+			if (idade >= 16 & idade <= 20) {
 					printf("JUNIOR");
 			}
-			if (val[0] >= 21 & val[0] <= 25) {
+			if (idade >= 21 & idade <= 25) {
 			 		printf("PROFISSIONAL");
 			}
 		break;
@@ -380,7 +395,35 @@ void getExercicio() {
 	case '4':
         switch (opc[1]) {
             case '1':
-            printf("Esse é o 1");
+            printf("\nNOME DO EXERCÍCIO: Cara ou Coroa\n \n");
+
+            printf(" -> Escolha um lado da moeda: \n\n");
+            printf("   0. Cara \n");
+            printf("   1. Coroa \n\n");
+
+            int lado;
+            do{
+                lado = getch();
+                fflush(stdin);
+            }while (lado != '0' && lado != '1');
+
+			int i;
+			int joga;
+			for (i = 1; i <= 10; i++){
+                printf("%d", i);
+                printf("ª jogada: ");
+
+                //joga = rand() % 2;
+
+                if ((rand() % 2) == 0){
+                    printf("cara");
+                }
+                else{
+                    printf("coroa");
+                }
+                //printf("%d", joga);
+                pular(1);
+			}
             break;
 
             case '2':
