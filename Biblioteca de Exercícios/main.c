@@ -1,57 +1,56 @@
-#include <locale.h> //language library
-#include <stdio.h>  //standard input
 #include <stdlib.h> //standard library
+#include <stdio.h>  //standard input
+#include <locale.h> //language library
 #include <string.h> //string library
 
 // PRELOAD FUNCTIONS
-void header(); // infos
-void menu();
-void opcoes();
-void listar();
-void getExercicio();
+void header();   //cabeçalho
+void menu();     //menu
+void opcoes();   //etapa do menu
+void listar();   //listar items do menu
+void getExercicio();  //pegar exercícios
 
-void sair();
-void input(); // input style
+void cor();  //definir a cor do programa
 
-void pular();
-void traco();
+void pular(); //pular linha
+void traco(); //traco de estilo
 
 // GLOBAL VARS
-int opc[2];
+char opc[2];
 
 // MAIN
 void main() {
-	setlocale(LC_ALL, "portuguese"); // declarar lingua
+	setlocale(LC_ALL, "Portuguese"); // declarar lingua
 
+	opc[0] = '0';
 	header();
 	do {
-		menu();
-		getExercicio();
-	} while (opc[0] != 27 || opc[1] != 27);
+        menu();
+        if (opc[0] != '0'){
+            getExercicio();
+        }
+    } while (opc[0] != 27 && opc[1] != 27);
 }
 
-void sair(){
-  int Ch;
-  do{
-    Ch = getch();
-    printf("Tecla: %c, %d\n",Ch,Ch); //caracter/codigo asc
-    pular(1);
-  }while (Ch != 27);
+void cor(char codigo[2]){
+    char comando[] = "color ";
+    strcat(comando, codigo);
+
+    system(comando);
 }
 
-void traco(int ordem) {
-	if (!ordem) {
-		pular(1);
-	}
-	int i;
-	for (i = 1; i <= 50; i++) {
-		printf("-");
-	}
-	if (ordem) {
-		pular(1);
-	}
+//CABEÇALHO
+void header() {
+	printf("----- BIBLIOTECA DE EXERCÍCIOS -----");
+	pular(2);
+
+	printf("|| Aluno: Bruno Marini\n");
+	printf("|| RA: 634883\n\n");
+
+	printf("| Aperte Esc para sair\n");
 }
 
+//PULAR LINHA
 void pular(int qtd_linhas) {
 	int i;
 	for (i = 1; i <= qtd_linhas; i++) {
@@ -59,42 +58,68 @@ void pular(int qtd_linhas) {
 	}
 }
 
-void input() {
-	printf("\n>");
-}
-
-void header() {
-	printf("----- BIBLIOTECA DE EXERCÍCIOS -----");
-	pular(2);
-
-	printf("|| Aluno: Bruno Marini\n");
-	printf("|| RA: 634883\n");
-}
-
+//MENU
 void menu() {
-	pular(1);
-	do {
-		opcoes(0);
-		opc[0] = getch();
-		fflush(stdin);
+    pular(1);
 
-		pular(1);
+	if (opc[0] == '0'){
+        opcoes(0);
 
-		opcoes(1);
+        do{
+            key(0);
+        }
+        while (opc[0] != '1' && opc[0] != '2' && opc[0] != '3' && opc[0] != '4');
 
-	} while (opc[0] == 0);
+        pular(1);
+	}
 
-	scanf("%d", &opc[1]);
-	fflush(stdin);
+    opcoes(1);
 
-	if (opc[1] == 0) {
-		opc[0] = 0;
+    if (opc[0] != '0'){
+        key(1);
+    }
+
+	if (opc[1] == '0') {
+		opc[0] = '0';
+		system("cls");
+		header();
 		menu();
 	}
 }
 
+//OPÇÕES DO MENU
+void opcoes(int etapa) {
+	if (!etapa) {
+		printf("Escolha a aula: \n");
+		listar("Aula ", 4, 0);
+	} else {
+		switch (opc[0]) {
+		case '2':
+			printf("Escolha o exercício: \n");
+			listar("Ex. ", 5, 1);
+			break;
+
+		case '3':
+			printf("Escolha o exercício: \n");
+			listar("Ex. ", 4, 1);
+			break;
+
+        case '4':
+			printf("Escolha o exercício: \n");
+			listar("Ex. ", 2, 1);
+			break;
+
+		default:
+			printf("-> Não há exercícios nessa aula!\n");
+			opc[0] = '0';
+			break;
+		}
+	}
+}
+
+//LISTAR ITEMS DO MENU
 void listar(char frase[20], int limite, int voltar) {
-	int i;
+	char i;
 	if (voltar) {
 		printf("  0. Voltar\n");
 	}
@@ -106,61 +131,27 @@ void listar(char frase[20], int limite, int voltar) {
 	}
 }
 
-void opcoes(int etapa) { // NÃO EXISTE BOOLEAN | NÃO EXISTE VARIÁVEL DAFAULT
-	if (!etapa) {
-		printf("Escolha a aula: \n");
-		listar("Aula ", 3, 0);
-		input();
-	} else {
-		int i;
-		switch (opc[0]) {
-		case 2:
-			printf("Escolha o exercício: \n");
-			listar("Ex. ", 5, 1);
-			input();
-			break;
+//TECLA APERTADA
+void key(int vetor){
+    opc[vetor] = getch();
+    fflush(stdin);
 
-		case 3:
-			printf("Escolha o exercício: \n");
-			listar("Ex. ", 4, 1);
-			input();
-			break;
-
-		default:
-			printf("Não há exercícios nessa aula!\n", i);
-			pular(1);
-			opc[0] = 0;
-			break;
-		}
-	}
+    if (opc[vetor] == 27) {
+        exit(EXIT_SUCCESS);
+    }
 }
 
-// int * exNumeros (int qtd_numeros){
-//   int static val[qtd_numeros];
-//   int i;
-
-//   for (i = 1; i <= qtd_numeros; i++) {
-//     printf(" -> Digite o ");
-//     printf("%d", i);
-//     printf("º número: ");
-
-//     scanf("%d", &val[i-1]);
-// 	  fflush(stdin);
-// 	}
-
-// 	return val;
-// }
-
+//PEGAR EXERCÍCIO
 void getExercicio() {
 	traco(0); // traço de estilo
 
 	int i, val[2]; // iterador e variáveis
 	switch (opc[0]) {
 	// AULA 02
-	case 2:
+	case '2':
 		switch (opc[1]) {
 		// Ex. 01
-		case 1:
+		case '1':
 			printf("\nNOME DO EXERCÍCIO: Soma de 2 números\n \n");
 			for (i = 1; i <= 2; i++) {
 				printf(" -> Digite o ");
@@ -171,11 +162,11 @@ void getExercicio() {
 				fflush(stdin);
 			}
 			pular(1);
-			printf("| Resultado: %d", val[0]);
+			printf("| Resultado: %d", val[0] + val[1]);
 			break;
 
 		// Ex. 02
-		case 2:
+		case '2':
 			printf(
 				"\nNOME DO EXERCÍCIO: Soma, multiplicação e média "
 				"aritmética de 2 números\n \n");
@@ -193,7 +184,7 @@ void getExercicio() {
 			break;
 
 		// Ex. 03
-		case 3:
+		case '3':
 			printf("\nNOME DO EXERCÍCIO: Volume de um cilindro circular\n \n");
 			printf(" -> Digite a altura: ");
 			scanf("%d", &val[0]);
@@ -208,7 +199,7 @@ void getExercicio() {
 			break;
 
 		// Ex. 04
-		case 4:
+		case '4':
 			printf("\nNOME DO EXERCÍCIO: Salário líquido do encanador\n \n");
 			printf(" -> Digite o nº de dias trabalhados: ");
 			scanf("%d", &val[0]);
@@ -219,7 +210,7 @@ void getExercicio() {
 			break;
 
 		// Ex. 05
-		case 5:
+		case '5':
 			printf("\nNOME DO EXERCÍCIO: Conta de lanchonete\n \n");
 
 			float val[2];
@@ -264,10 +255,10 @@ void getExercicio() {
 		}
 		break;
 
-	case 3:
+	case '3':
 		switch (opc[1]) {
 		// Ex. 01
-		case 1:
+		case '1':
 			printf("\nNOME DO EXERCÍCIO: Maior ou Igual\n \n");
 
 			for (i = 1; i <= 2; i++) {
@@ -293,7 +284,7 @@ void getExercicio() {
 			break;
 
 		// Ex. 02
-		case 2:
+		case '2':
 			printf(
 				"\nNOME DO EXERCÍCIO: Somas apenas se ambos forem positivos "
 				"e informar qual é o negativo caso exista\n \n");
@@ -323,7 +314,7 @@ void getExercicio() {
 			break;
 
 		// Ex. 03
-		case 3:
+		case '3':
 			printf(
 				"\nNOME DO EXERCÍCIO: Calcular raízes do 2º grau e informar "
 				"quando não forem reais\n \n");
@@ -354,7 +345,7 @@ void getExercicio() {
 			break;
 
 		// Ex. 04
-		case 4:
+		case '4':
 			printf(
 				"\nNOME DO EXERCÍCIO: Categoria do atleta pela faixa "
 				"etária\n \n");
@@ -386,10 +377,32 @@ void getExercicio() {
 	}
 	break;
 
-default:
-	printf("Algo deu errado :(");
+	case '4':
+        switch (opc[1]) {
+            case '1':
+            printf("Esse é o 1");
+            break;
+
+            case '2':
+                printf("Esse é o 2");
+            break;
+        }
 	break;
+    }
+    pular(1);
+    traco(1);
 }
-pular(1);
-traco(1);
+
+//TRAÇO DE ESTILO
+void traco(int ordem) {
+	if (!ordem) {
+		pular(1);
+	}
+	int i;
+	for (i = 1; i <= 50; i++) {
+		printf("-");
+	}
+	if (ordem) {
+		pular(1);
+	}
 }
