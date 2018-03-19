@@ -4,7 +4,7 @@
 #include <string.h> //string library
 #include <time.h>   //time library
 
-// PRELOAD FUNCTIONS
+//PRELOAD FUNCTIONS
 void header();   //cabeçalho
 void menu();     //menu
 void opcoes();   //etapa do menu
@@ -16,22 +16,17 @@ void cor();  //definir a cor do programa
 void pular(); //pular linha
 void traco(); //traco de estilo
 
-// GLOBAL VARS
+//GLOBAL VARS
 char opc[2];
 
-// MAIN
+//MAIN
 void main() {
 	setlocale(LC_ALL, "Portuguese"); // declarar lingua
 
+	cor("f0");
+
 	opc[0] = '0';
 	header();
-
-    int i;
-	for (i = 0; i < 7; i++){
-        cor("0a");
-        cor("01");
-        cor("07");
-	}
 
 	do {
         menu();
@@ -41,6 +36,7 @@ void main() {
     } while (opc[0] != 27 && opc[1] != 27);
 }
 
+//DEFINE A COR DO PROJETO
 void cor(char codigo[2]){
     char comando[] = "color ";
     strcat(comando, codigo);
@@ -56,7 +52,7 @@ void header() {
 	printf("|| Aluno: Bruno Marini\n");
 	printf("|| RA: 634883\n\n");
 
-	printf("| Aperte Esc para sair\n");
+	printf("| Aperte Esc para sair |\n");
 }
 
 //PULAR LINHA
@@ -395,39 +391,89 @@ void getExercicio() {
 	case '4':
         switch (opc[1]) {
             case '1':
-            printf("\nNOME DO EXERCÍCIO: Cara ou Coroa\n \n");
+                printf("\nNOME DO EXERCÍCIO: Cara ou Coroa\n \n");
 
-            printf(" -> Escolha um lado da moeda: \n\n");
-            printf("   0. Cara \n");
-            printf("   1. Coroa \n\n");
+                printf(" -> Escolha um lado da moeda: \n\n");
+                printf("   0. Cara \n");
+                printf("   1. Coroa \n\n");
 
-            int lado;
-            do{
-                lado = getch();
-                fflush(stdin);
-            }while (lado != '0' && lado != '1');
+                int lado;
+                do{
+                    lado = getch();
+                    fflush(stdin);
+                }while (lado != '0' && lado != '1');
 
-			int i;
-			int joga;
-			for (i = 1; i <= 10; i++){
-                printf("%d", i);
-                printf("ª jogada: ");
+                int i, cara = 0, coroa = 0;
 
-                //joga = rand() % 2;
+                for (i = 1; i <= 10; i++){
+                    printf("   %d", i);
+                    printf("ª jogada: ");
 
-                if ((rand() % 2) == 0){
-                    printf("cara");
+                    if ((rand() % 2) == 0){
+                        cara++;
+                        printf("Cara");
+                    }
+                    else{
+                        coroa++;
+                        printf("Coroa");
+                    }
+                    pular(1);
+                }
+                pular(2);
+
+                printf("  | Resultado: cara (%d", cara);
+                printf(") / coroa (%d", coroa);
+                printf(")");
+
+                pular(2);
+
+                if (cara > coroa){
+                    printf("   CARA GANHOU !!!");
                 }
                 else{
-                    printf("coroa");
+                    if(coroa > cara){
+                        printf("   COROA GANHOU!!");
+                    }
+                    else{
+                        printf("   EMPATOU !!");
+                    }
                 }
-                //printf("%d", joga);
-                pular(1);
-			}
             break;
 
             case '2':
-                printf("Esse é o 2");
+                printf("\nNOME DO EXERCÍCIO: Adivinhe o número\n \n");
+
+                 printf(" | Pense em um nº entre 1 e 1023 |\n\n");
+
+                 int dica, min = 1, max = 1023, med = (min + max) / 2;
+                 for (i = 1; i <= 9; i++){
+                    printf(" -> É menor (u), igual(i) ou maior(o) que ");
+                    printf("%d", med);
+                    printf("? ");
+
+                    do{
+                        dica = getch();
+                    }while (dica != 'u' && dica != 'U' && dica != 'i' && dica != 'I' && dica != 'o' && dica != 'O');
+
+                    if (dica == 'u' || dica == 'U'){
+                        max = med;
+                        med = (min + max) / 2;
+                    }
+                    else{
+                        if (dica == 'o' || dica == 'O'){
+                            min = med;
+                            med = (min + max) / 2;
+                        }
+                        else{
+                            pular(2);
+                            printf("ACERTEI !!");
+                            break;
+                        }
+                    }
+                    pular(1);
+                 }
+                pular(2);
+                printf(" | SEU NÚMERO É: %d", med);
             break;
         }
 	break;
