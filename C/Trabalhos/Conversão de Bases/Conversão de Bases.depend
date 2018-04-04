@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1522871686 source:e:\puc\aed\c\trabalhos\conversão de bases\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
