@@ -4,17 +4,26 @@
 #include <string.h> //string library
 #include <math.h>   //math library
 
+/*  AUTORES: Arthur Teixeira, Bruno Marini, Giuliano Penido */
+/*  FUNÇÃO:  ler e converter números entre as bases decimal e binária e também entre decimal e octal, nas duas direções */
+
 //GLOBAL VARS
+//Declara as variáveis globais
 int key;
 
 //FUNCTIONS
+//Declara e realiza o pré carregamento de todas as funções que serão utilizadas no decorrer do programa
 void decimal_binario();
 void binario_decimal();
 void octal_decimal();
 void decimal_octal();
 
+
 //MAIN
+//A função a seguir é a "main" do programa
+//Ela cria um menu de interação com usuário,permitindo que ele escolha qual conversão de bases ele fará, chamando a função de conversão escolhida
 void main(){
+    setlocale(LC_ALL, "Portuguese");
     do {
         menu();
     }
@@ -22,6 +31,7 @@ void main(){
 }
 
 //PULAR LINHA
+//Realiza o processo de pular linha de acordo com a quantidade desejada
 void pular(int qtd_linhas) {
 	int i;
 	for (i = 1; i <= qtd_linhas; i++) {
@@ -29,7 +39,8 @@ void pular(int qtd_linhas) {
 	}
 }
 
-//PULAR LINHA
+//MENU
+//Mostra o menu e recebe a opção desejada pelo usuário
 void menu(){
 
     printf("BEM-VINDO(A) AO CONVERSOR DE BASES");
@@ -72,6 +83,9 @@ void menu(){
 }
 
 //CONVERSÕES
+
+//DECIMAL -> BINÁRIO
+//A seguinte função realiza a conversão dos números em base decimal para a base binária
 void decimal_binario() {
     printf("\n------ DECIMAL -> BINARIO ------\n");
     int total=0,valor,aux,resto=0,multiplicador=1;
@@ -87,6 +101,8 @@ void decimal_binario() {
     printf("\n| RESULTADO: %d = %d\n",valor,total);
 }
 
+//BINÁRIO -> DECIMAL
+//A seguinte função realiza a conversão dos números em base binária para a base decimal
 void binario_decimal() {
     printf("\n------ BINARIO -> DECIMAL ------\n");
     int total=0,potencia=0,algarismo=0,valor=0,aux,verifica_erro=0;
@@ -110,6 +126,8 @@ void binario_decimal() {
     }
 }
 
+//OCTAL -> DECIMAL
+//A seguinte função realiza a conversão dos números em base binária para a base decimal
 void octal_decimal() {
     printf("\n------ OCTAL -> DECIMAL ------\n");
     int total=0,potencia=0,algarismo=0,valor=0,aux,verifica_erro=0;
@@ -133,6 +151,8 @@ void octal_decimal() {
     }
 }
 
+//DECIMAL -> OCTAL
+//A seguinte função realiza a conversão dos números em base decimal para a base octal
 void decimal_octal() {
     printf("\n------ DECIMAL -> OCTAL ------\n");
     int total=0,valor,aux,resto=0,multiplicador=1;
