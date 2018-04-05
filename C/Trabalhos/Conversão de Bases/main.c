@@ -1,11 +1,11 @@
-#include <stdlib.h> //standard library
-#include <stdio.h>  //standard input
-#include <locale.h> //language library
-#include <string.h> //string library
-#include <math.h>   //math library
+#include <stdio.h>  //Entrada de valores padrão do C
+#include <stdlib.h> //Biblioteca padrão do C
+#include <locale.h> //Biblioteca para línguas e caracteres
+#include <string.h> //Biblioteca para manuseio de variáveis tipo String
+#include <math.h>   //Biblioteca para cálculos matemáticos
 
 /*  AUTORES: Arthur Teixeira, Bruno Marini, Giuliano Penido */
-/*  FUNÇÃO:  ler e converter números entre as bases decimal e binária e também entre decimal e octal, nas duas direções */
+/*  FUNÇÃO DO SOFTWARE:  ler e converter números entre as bases decimais <-> binárias e decimais <-> octagonais, nas duas direções */
 
 //GLOBAL VARS
 //Declara as variáveis globais
